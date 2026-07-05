@@ -1,1 +1,1 @@
-DoNow is a web app that gives you random personal development tasks to help you build better habits and spend less time on social media.
+DoNow is a personal development web app that provides random tasks to help you build better habits, stay productive, and reduce time spent on social media. The app is currently under development, and more features are being added.
