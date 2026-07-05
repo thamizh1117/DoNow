@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DoNow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+
+<div id="stars-container"></div>
+
+<div id="moon">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="moonGlow" cx="40%" cy="40%" r="60%">
+        <stop offset="0%" style="stop-color:#fffde7;stop-opacity:1"/>
+        <stop offset="100%" style="stop-color:#f9e04b;stop-opacity:0.85"/>
+      </radialGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <circle cx="50" cy="50" r="42" fill="url(#moonGlow)" filter="url(#glow)"/>
+    <circle cx="70" cy="35" r="36" fill="#1a2744"/>
+  </svg>
+</div>
+
+<div id="sun">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" style="stop-color:#fff176;stop-opacity:1"/>
+        <stop offset="100%" style="stop-color:#ffb300;stop-opacity:1"/>
+      </radialGradient>
+      <filter id="sunGlow">
+        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <g stroke="#ffca28" stroke-width="3" stroke-linecap="round" filter="url(#sunGlow)">
+      <line x1="50" y1="5" x2="50" y2="15"/>
+      <line x1="50" y1="85" x2="50" y2="95"/>
+      <line x1="5" y1="50" x2="15" y2="50"/>
+      <line x1="85" y1="50" x2="95" y2="50"/>
+      <line x1="18" y1="18" x2="25" y2="25"/>
+      <line x1="75" y1="75" x2="82" y2="82"/>
+      <line x1="82" y1="18" x2="75" y2="25"/>
+      <line x1="18" y1="82" x2="25" y2="75"/>
+    </g>
+    <circle cx="50" cy="50" r="28" fill="url(#sunGrad)" filter="url(#sunGlow)"/>
+  </svg>
+</div>
+
+<div id="clouds-container"></div>
+
+<button id="settings-btn" onclick="openSettings()">⚙️</button>
+<button id="back-btn" onclick="goToWelcome()">←</button>
+<div id="overlay" onclick="closeSettings()"></div>
+
+<div id="settings-panel">
+  <div class="settings-header">
+    <span id="txt-settings">⚙️ Settings</span>
+  </div>
+  <div class="settings-body">
+    <div class="settings-section">
+      <div class="settings-section-title" id="txt-language-label">Language</div>
+      <div class="lang-options">
+        <button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧 English</button>
+        <button class="lang-btn" onclick="setLang('ta')" id="btn-ta">🇮🇳 தமிழ்</button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-section-title" id="txt-mode-label">Mode</div>
+      <div class="mode-toggle" onclick="toggleMode()">
+        <span id="txt-mode-name">☀️ Light Mode</span>
+        <div class="toggle-switch"><div class="toggle-knob"></div></div>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-section-title">🏆 Level &amp; XP</div>
+      <div class="settings-level-box">
+        <div class="settings-level-num" id="settings-level-badge">Level 1</div>
+        <div class="settings-xp-text" id="settings-xp-text">⭐ 0 XP Total</div>
+        <div class="xp-bar-bg" style="margin:8px 0 4px;">
+          <div class="xp-bar-fill" id="settings-xp-bar" style="width:0%"></div>
+        </div>
+        <div class="xp-bar-label" id="settings-xp-label">0 / 1000 XP to next level</div>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-section-title" id="txt-terms-label">Terms &amp; Conditions</div>
+      <div class="terms-box">
+        <ol>
+          <li>DONOW is a personal task management application.</li>
+          <li>Users are responsible for the tasks and content they create.</li>
+          <li>The app stores task data locally on the device unless otherwise specified.</li>
+          <li>DONOW is provided "as is" without any guarantees of uninterrupted service.</li>
+          <li>Users should not use the app for illegal, harmful, or abusive activities.</li>
+          <li>The developer is not responsible for any loss of data caused by device issues, accidental deletion, or software errors.</li>
+          <li>These terms may be updated in future versions of the app.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <button id="settings-close" onclick="closeSettings()">✖ Close</button>
+</div>
+
+<div id="congrats-popup">
+  <div class="congrats-box">
+    <div class="emoji">🎉</div>
+    <h2 id="congrats-title">Level Up!</h2>
+    <div class="level-num" id="congrats-level">2</div>
+    <p id="congrats-msg">Amazing! You reached a new level!</p>
+    <button class="congrats-btn" onclick="closeCongrats()">🚀 Keep Going!</button>
+  </div>
+</div>
+
+<div id="xp-toast">+10 XP ⭐</div>
+
+<div class="page active" id="welcome-page">
+  <div class="welcome-card">
+    <h1 id="txt-welcome-title">DoNow</h1>
+    <p id="txt-welcome-sub">Big results depend on small actions.</p>
+    <button class="btn-start" onclick="goToTask()" id="btn-start">START</button>
+  </div>
+</div>
+
+<div class="page" id="task-page">
+  <div class="card">
+    <h2 class="card-title">🚀 <span id="txt-title">DoNow</span></h2>
+    <p class="subtitle" id="txt-subtitle">Small actions create big results.</p>
+    <div class="xp-section">
+      <div id="level-badge">🏆 Level 1</div>
+      <div id="xp">⭐ XP: 0</div>
+      <div class="xp-bar-bg">
+        <div class="xp-bar-fill" id="xp-bar" style="width:0%"></div>
+      </div>
+      <div class="xp-bar-label" id="xp-bar-label">0 / 1000 XP to next level</div>
+    </div>
+    <div id="task"></div>
+    <div>
+      <button class="btn btn-primary" onclick="getTask()" id="btn-get-task">✨ Get Task</button>
+      <button class="btn btn-success" onclick="completeTask()" id="btn-done">✅ Done!</button>
+    </div>
+    <div style="margin-top:6px;">
+      <button class="btn btn-history" onclick="toggleHistory()" id="btn-history">📋 History</button>
+      <button class="btn btn-secondary" onclick="clearHistory()" id="btn-clear">🗑 Clear</button>
+    </div>
+  </div>
+  <div id="history-panel">
+    <h3 id="txt-history-title">✅ Completed Tasks</h3>
+    <ul class="history-list" id="history"></ul>
+    <p class="history-empty" id="history-empty" style="display:none;">No tasks completed yet!</p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
