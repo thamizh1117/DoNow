@@ -10,7 +10,7 @@ body{
 }
 
 /* ── SKY BACKGROUNDS ── */
-body.light-mode{background:linear-gradient(180deg,#87CEEB 0%,#acd8f5 40%,#E0F4FF 70%,#ffffff 100%);}
+body.light-mode{background:linear-gradient(180deg,#87CEEB 0%,#B0E0FF 40%,#E0F4FF 70%,#ffffff 100%);}
 body.dark-mode{background:linear-gradient(180deg,#0a0a1a 0%,#0d1b2a 40%,#1a2744 100%);}
 
 /* ── STARS ── */
@@ -201,4 +201,4 @@ body.dark-mode .settings-level-box{background:rgba(255,255,255,0.07);}
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:rgba(100,100,200,0.3);borderdius:1-ra0px;}
+::-webkit-scrollbar-thumb{background:rgba(100,100,200,0.3);border-radius:10px;}
